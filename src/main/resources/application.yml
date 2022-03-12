@@ -1,0 +1,9 @@
+
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://kevin:12345@cluster0.rt7sg.mongodb.net/publicaciones
+
+
+

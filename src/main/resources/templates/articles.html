@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Articulos</title>
+    <link th:href="@{/css/articles.css}" rel="stylesheet">
+
+    <!-- MD BOOTSTRAP -->
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            rel="stylesheet"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <!-- autocomplete.js -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.6/dist/css/autoComplete.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/10.2.6/autoComplete.min.js"></script>
+    <!-- Jspdf -->
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/cjs/index.min.js"></script>
+
+    <script th:src="@{/javascript/articles.js}"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-light bg-light">
+    <div class="container">
+
+        <a class="navbar-brand" href="#">Brand</a>
+
+        <img
+                id="imgSenderos"
+                th:src="@{/imgs/grupo-senderos.png}"
+                class="me-2"
+                alt="MDB Logo"
+                loading="lazy"
+        />
+
+        <a href="www.google.com"> <i class="far fa-heart fa-1x  " style="color: #fd1717"></i> </a>
+    </div>
+</nav>
+
+<!-- Jumbotron -->
+<div
+        class="bg-image p-5 text-center shadow-1-strong rounded mb-5 text-white"
+        style="background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/003.webp');"
+>
+    <img style="width: 160px"
+         src="https://www.morganstanley.com/content/dam/msdotcom/people/tiles/isaiah-dwuma.jpg.img.380.medium.jpg/1594668408164.jpg"
+         class="rounded-circle border" alt="..."/>
+
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus praesentium
+        labore accusamus sequi, voluptate debitis tenetur in deleniti possimus modi voluptatum
+        neque maiores dolorem unde? Aut dolorum quod excepturi fugit.
+    </p>
+</div>
+<!-- Jumbotron -->
+
+<div class="container d-flex justify-content-between pb-2">
+    <!-- Warning -->
+    <div class="btn-group">
+        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Autor
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Autores Disponibles</h5>
+                        <button type="button" class="btn-close btn-warning" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <span th:each="author: ${authors}"><a class="dropdown-item" th:text="${author}" th:href="@{/pdf(autor=${author})}"></a></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input id="autoComplete" type="search" dir="ltr" spellcheck=true autocorrect="true" autocomplete="true"
+           autocapitalize="true" maxlength="48" tabindex="1">
+</div>
+
+
+<div class="container-sm-fluid container-lg">
+    <div class="row">
+        <div th:each="pdf: ${pdfProperties}" class="col-sm-12 col-lg-12 gx-3 pt-sm-1 pt-4  justify-content-evenly">
+            <div class="card mb-3 shadow-custom">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img
+                                th:src="${pdf.getImage()}"
+                                alt="Trendy Pants and Shoes"
+                                class="img-fluid rounded-start"
+                        />
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${#strings.abbreviate(pdf.getTitle(),300)}"></h5>
+                            <p class="card-text" th:text="${#strings.abbreviate(pdf.getDescription(),550)}"></p>
+                            <p class="card-text">
+                                <small class="text-muted">Last updated 3 mins ago</small>
+                            </p>
+                            <!-- Button trigger modal -->
+                            <a type="button" th:href="@{/pdf/getFlipBookLink}" class="btn btn-primary">
+                                Ver más
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:if="${totalPages > 1}">
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li th:if="${param.autor == null}" class="page-item" th:classappend="${currentPage==1} ? disabled" ><a class="page-link" th:href="@{/pdf(page=${currentPage}-${1})}">Previous</a></li>
+            <li th:if="${param.autor == null}" th:each="i: ${#numbers.sequence(1,totalPages)}" class="page-item"><a th:text="${i}" class="page-link" th:href="@{/pdf(page=${i})}"></a></li>
+            <li th:if="${param.autor == null}" class="page-item" th:classappend="${currentPage==totalPages} ? disabled"><a class="page-link" th:href="@{/pdf(page=${currentPage}+${1})}">Next</a></li>
+
+            <li th:if="${param.autor != null}" class="page-item" th:classappend="${currentPage==1} ? disabled" ><a class="page-link" th:href="@{/pdf(page=${currentPage}-${1},autor=${param.autor})}">Previous</a></li>
+            <li th:if="${param.autor != null}" th:each="i: ${#numbers.sequence(1,totalPages)}" class="page-item"><a th:text="${i}" class="page-link" th:href="@{/pdf(page=${i},autor=${param.autor})}"></a></li>
+            <li th:if="${param.autor != null}" class="page-item" th:classappend="${currentPage==totalPages} ? disabled"><a class="page-link" th:href="@{/pdf(page=${currentPage}+${1},autor=${param.autor})}">Next</a></li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Footer -->
+<footer class="bg-light text-center ">
+    <!-- Grid container -->
+    <div class="container p-4">
+
+        <!-- Section: Social media -->
+        <section class="mb-4">
+            <!-- Facebook -->
+            <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998" href="#!" role="button"><i
+                    class="fab fa-facebook-f"></i></a>
+
+            <!-- Twitter -->
+            <a class="btn btn-primary btn-floating m-1" style="background-color: #55acee" href="#!" role="button"><i
+                    class="fab fa-twitter"></i></a>
+
+            <!-- Google -->
+            <a class="btn btn-primary btn-floating m-1" style="background-color: #dd4b39" href="#!" role="button"><i
+                    class="fab fa-google"></i></a>
+
+            <!-- Instagram -->
+            <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac" href="#!" role="button"><i
+                    class="fab fa-instagram"></i></a>
+
+            <!-- Linkedin -->
+            <a class="btn btn-primary btn-floating m-1" style="background-color: #0082ca" href="#!" role="button"><i
+                    class="fab fa-linkedin-in"></i></a>
+            <!-- Github -->
+            <a class="btn btn-primary btn-floating m-1" style="background-color: #333333" href="#!" role="button"><i
+                    class="fab fa-github"></i></a>
+        </section>
+        <!-- Section: Social media -->
+
+
+        <!-- Section: Text -->
+        <section class="mb-4">
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
+                distinctio earum repellat quaerat voluptatibus placeat nam,
+                commodi optio pariatur est quia magnam eum harum corrupti dicta,
+                aliquam sequi voluptate quas.
+            </p>
+        </section>
+        <!-- Section: Text -->
+
+
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        © 2020 Copyright:
+        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+<script>
+
+    const autoCompleteJS = new autoComplete({
+        selector: "#autoComplete",
+        placeHolder: "Buscar título...",
+        data: {
+            src: () => {
+                return fetch("/pdf/getTitles")
+                    .then(response => response.json())
+            },
+            cache: true,
+        },
+        submit: true,
+        resultItem: {
+            tag: "li",
+            class: "autoComplete_result",
+            element: (item, data) => {
+                item.setAttribute("data-parent", "food-item");
+            },
+            highlight: "autoComplete_highlight",
+            selected: "autoComplete_selected"
+        },
+        searchEngine: "loose",
+        resultsList: {
+            element: (list, data) => {
+                if (!data.results.length) {
+                    // Create "No Results" message element
+                    const message = document.createElement("div");
+                    // Add class to the created element
+                    message.setAttribute("class", "no_result");
+                    // Add message text content
+                    message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                    // Append message element to the results list
+                    list.prepend(message);
+                }
+            },
+            noResults: true,
+        }
+    });
+    document.querySelector("#autoComplete").addEventListener("selection", function (event) {
+        // "event.detail" carries the autoComplete.js "feedback" object
+         location.href = "/pdf?titulo=" + encodeURIComponent(event.detail.selection.value)
+    });
+
+</script>
+
+</body>
+</html>
