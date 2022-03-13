@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>flipbook</title>
+    <link rel="stylesheet" th:href="@{/css/flipbook.css}">
+</head>
+<body>
+    <iframe th:src="${pdfUrl}"  seamless="seamless" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" ></iframe>
+</body>
+</html>

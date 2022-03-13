@@ -7,6 +7,55 @@
   box-shadow: 0 2px 14px 0 rgba(0, 0, 0, .25), 0 3px 10px 5px rgba(0, 0, 0, 0.1) !important;
 }
 
-.card{
-  margin-inline: 3rem;
+.row{
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
 }
+
+#profileDescription{
+  color: black;
+  font-style: italic;
+}
+
+#profileBackground {
+  background-image: url('https://senderos.s3.amazonaws.com/images/etc/backgroundProfileU.png');
+}
+
+@media only screen and (min-width: 601px) {
+  #profileDescription{
+    margin-inline: 8rem;
+  }
+  .card{
+    margin-inline: 3rem;
+  }
+  .card-body{
+    min-height: 100%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+
+  body{
+    overflow-x: hidden;
+  }
+
+  .card{
+    margin-inline: 1rem;
+  }
+
+
+
+  .card-img-top{
+    height: 22rem !important;
+  }
+
+  #autoComplete{
+    transform: rotateY(45deg);
+  }
+
+  #autoComplete_list_1{
+    overflow-x: hidden;
+  }
+}
+

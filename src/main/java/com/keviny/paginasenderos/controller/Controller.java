@@ -9,14 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Controller
 @RequestMapping(path = "pdf")
@@ -69,16 +65,12 @@ public class Controller {
         return "articles";
     }
 
-    @GetMapping(path = "getFlipBookLink")
-    public String getFlipBookLink(@RequestParam Optional<String> bookName, Model model){
-        return "redirect:https://online.fliphtml5.com/ulbpo/qmfj/";
-    }
+    @GetMapping(path = "flipbook")
+    public String getPdfSave(@RequestParam Optional<String> booktitle, Model model){
 
-
-    @GetMapping(path = "saveform")
-    public String getPdfSave(@ModelAttribute PdfDocument pdfDocument, Model model){
-        model.addAttribute("pdfDocument",pdfDocument);
-        return "Save";
+        //model.addAttribute("pdfUrl",pdfDocService.findByTitle(booktitle.get()).get().getUrl());
+        model.addAttribute("pdfUrl","https://online.fliphtml5.com/ulbpo/nyft/");
+        return "flipbook";
     }
 
     @ResponseBody

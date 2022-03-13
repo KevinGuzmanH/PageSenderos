@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Articulos</title>
-    <link th:href="@{/css/articles.css}" rel="stylesheet">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- MD BOOTSTRAP -->
     <!-- Font Awesome -->
     <link
@@ -39,46 +38,49 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/10.2.6/autoComplete.min.js"></script>
     <!-- Jspdf -->
     <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/cjs/index.min.js"></script>
-
-    <script th:src="@{/javascript/articles.js}"></script>
+    <!-- Jsap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <link th:href="@{/css/articles.css}" rel="stylesheet">
 </head>
 <body>
 
 <nav class="navbar navbar-light bg-light">
     <div class="container">
 
-        <a class="navbar-brand" href="#">Brand</a>
+        <a class="navbar-brand" href="#">Inicio</a>
 
         <img
                 id="imgSenderos"
-                th:src="@{/imgs/grupo-senderos.png}"
+                th:src="@{/imgs/grupo-senderosp.png}"
                 class="me-2"
                 alt="MDB Logo"
                 loading="lazy"
         />
 
-        <a href="www.google.com"> <i class="far fa-heart fa-1x  " style="color: #fd1717"></i> </a>
+        <a href="#"> <i class="far fa-heart fa-1x  " style="color: #fd1717"></i> </a>
     </div>
 </nav>
 
 <!-- Jumbotron -->
-<div
+<div th:id="profileBackground"
         class="bg-image p-5 text-center shadow-1-strong rounded mb-5 text-white"
-        style="background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/003.webp');"
 >
-    <img style="width: 160px"
-         src="https://www.morganstanley.com/content/dam/msdotcom/people/tiles/isaiah-dwuma.jpg.img.380.medium.jpg/1594668408164.jpg"
+    <img
+         id="profileImg"
+         style="width: 160px"
+         src="https://us.123rf.com/450wm/vectorkif/vectorkif1711/vectorkif171100073/89685386-cara-expresi%C3%B3n-de-una-mujer-riendo-emociones-femeninas-atractivo-personaje-de-dibujos-animados-ilust.jpg?ver=6"
          class="rounded-circle border" alt="..."/>
 
-    <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus praesentium
-        labore accusamus sequi, voluptate debitis tenetur in deleniti possimus modi voluptatum
-        neque maiores dolorem unde? Aut dolorum quod excepturi fugit.
+    <p id="profileDescription">
+        Nataly Restrepo actualmente trabaja en la Facultad de educación, Tecnológico de Antioquia. Nataly investiga en Ciencias de la Educación, Educación Especial y Educación
+        Preescolar-Infantil. Su proyecto actual es 'Mediaciones pedagógicas en la atencón a la diversidad" "transiciones y trayectorias educativas en la educación infantil
+        contextualización y pertinencia curricular en la Educación inicial
     </p>
 </div>
 <!-- Jumbotron -->
 
-<div class="container d-flex justify-content-between pb-2">
+<div class="container d-flex justify-content-between pb-2" id="cards-container">
     <!-- Warning -->
     <div class="btn-group">
         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -111,14 +113,28 @@
 
 
 <div class="container-sm-fluid container-lg">
-    <div class="row">
-        <div th:each="pdf: ${pdfProperties}" class="col-sm-12 col-lg-12 gx-3 pt-sm-1 pt-4  justify-content-evenly">
-            <div class="card mb-3 shadow-custom">
-                <div class="row g-0">
+    <div class="row m-0" id="cardsRow">
+        <div th:each="pdf, itemStat: ${pdfProperties}" class="col-sm-12 col-lg-12 gx-3 pt-sm-1 pt-4  justify-content-evenly">
+
+            <!-- Phone Card -->
+            <a th:href="@{/pdf/flipbook(booktitle=${pdf.getTitle()})}" class="text-dark">
+                <div th:id="${#strings.listSplit(pdf.getTitle(),' ').get(1)}" class="d-lg-none card mb-3 shadow-custom">
+                    <img th:src="${pdf.getImage()}" class="card-img-top" alt="imagen de libro"/>
+                    <div class="card-body">
+                        <h6 class="card-title fs-5" th:text="${#strings.abbreviate(pdf.getTitle(),300)}"></h6>
+                        <p class="card-text fs-6" th:text="${#strings.abbreviate(pdf.getDescription(),320)}"></p>
+                    </div>
+                </div>
+            </a>
+            <!-- Phone Card -->
+
+            <!-- PC Card -->
+            <div th:id="${#strings.listSplit(pdf.getTitle(),' ').get(1)}" class="d-none d-lg-block card mb-3 shadow-custom">
+                <div class="row g-0 m-0">
                     <div class="col-md-4">
                         <img
                                 th:src="${pdf.getImage()}"
-                                alt="Trendy Pants and Shoes"
+                                alt="Imagen de libro"
                                 class="img-fluid rounded-start"
                         />
                     </div>
@@ -130,7 +146,7 @@
                                 <small class="text-muted">Last updated 3 mins ago</small>
                             </p>
                             <!-- Button trigger modal -->
-                            <a type="button" th:href="@{/pdf/getFlipBookLink}" class="btn btn-primary">
+                            <a type="button" th:href="@{/pdf/flipbook(booktitle=${pdf.getTitle()})}" class="btn btn-primary">
                                 Ver más
                             </a>
 
@@ -138,6 +154,8 @@
                     </div>
                 </div>
             </div>
+            <!-- PC Card -->
+
         </div>
     </div>
 </div>
@@ -156,10 +174,11 @@
     </nav>
 </div>
 
+
 <!-- Footer -->
-<footer class="bg-light text-center ">
+<footer class="bg-warning text-center">
     <!-- Grid container -->
-    <div class="container p-4">
+    <div class="container p-4 text-white">
 
         <!-- Section: Social media -->
         <section class="mb-4">
@@ -179,12 +198,6 @@
             <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac" href="#!" role="button"><i
                     class="fab fa-instagram"></i></a>
 
-            <!-- Linkedin -->
-            <a class="btn btn-primary btn-floating m-1" style="background-color: #0082ca" href="#!" role="button"><i
-                    class="fab fa-linkedin-in"></i></a>
-            <!-- Github -->
-            <a class="btn btn-primary btn-floating m-1" style="background-color: #333333" href="#!" role="button"><i
-                    class="fab fa-github"></i></a>
         </section>
         <!-- Section: Social media -->
 
@@ -192,10 +205,9 @@
         <!-- Section: Text -->
         <section class="mb-4">
             <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-                distinctio earum repellat quaerat voluptatibus placeat nam,
-                commodi optio pariatur est quia magnam eum harum corrupti dicta,
-                aliquam sequi voluptate quas.
+                El grupo Senderos de la Facultad de Educación y Ciencias Sociales se reconoce como un grupo líder
+                en el ámbito nacional y con proyección internacional por la producción, actualización y renovación
+                del conocimiento en el campo educativo
             </p>
         </section>
         <!-- Section: Text -->
@@ -205,60 +217,15 @@
     <!-- Grid container -->
 
     <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-        © 2020 Copyright:
-        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+    <div class="text-center p-3 bg-light">
+        © 2020 Copyright
+        <a class="text-dark" href="https://mdbootstrap.com/">Grupo Senderos</a>
     </div>
     <!-- Copyright -->
 
 </footer>
 <!-- Footer -->
 
-<script>
-
-    const autoCompleteJS = new autoComplete({
-        selector: "#autoComplete",
-        placeHolder: "Buscar título...",
-        data: {
-            src: () => {
-                return fetch("/pdf/getTitles")
-                    .then(response => response.json())
-            },
-            cache: true,
-        },
-        submit: true,
-        resultItem: {
-            tag: "li",
-            class: "autoComplete_result",
-            element: (item, data) => {
-                item.setAttribute("data-parent", "food-item");
-            },
-            highlight: "autoComplete_highlight",
-            selected: "autoComplete_selected"
-        },
-        searchEngine: "loose",
-        resultsList: {
-            element: (list, data) => {
-                if (!data.results.length) {
-                    // Create "No Results" message element
-                    const message = document.createElement("div");
-                    // Add class to the created element
-                    message.setAttribute("class", "no_result");
-                    // Add message text content
-                    message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
-                    // Append message element to the results list
-                    list.prepend(message);
-                }
-            },
-            noResults: true,
-        }
-    });
-    document.querySelector("#autoComplete").addEventListener("selection", function (event) {
-        // "event.detail" carries the autoComplete.js "feedback" object
-         location.href = "/pdf?titulo=" + encodeURIComponent(event.detail.selection.value)
-    });
-
-</script>
-
+<script th:src="@{/javascript/articles.js}"></script>
 </body>
 </html>
