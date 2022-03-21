@@ -1,0 +1,39 @@
+
+.contact-div{
+    background-color: #d8eacc;
+    height: 91vh;
+}
+
+.contact-word{
+    font-size: 5rem;
+}
+
+.contact-word-container{
+    margin-top: 30vh;
+}
+
+.mail-list{
+    margin-top: 20vh;
+    font-size: 23px;
+}
+
+.mail-list > li{
+    padding-bottom: 1rem;
+}
+
+.text-muted{
+    margin: 0px;
+}
+
+@media only screen and (max-width: 768px) {
+    .mail-list{
+        margin-top: 7vh;
+        font-size: 23px;
+    }
+    .contact-word{
+        font-size: 3rem;
+    }
+    .contact-word-container{
+        margin-top: 7vh;
+    }
+}

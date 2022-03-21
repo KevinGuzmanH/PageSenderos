@@ -1,0 +1,29 @@
+
+.landing{
+    background-color: #d8eacc;
+    height: 91vh;
+}
+
+.landing-main-text{
+    font-size: 2rem;
+    padding-top: 6rem;
+    line-height: 1.3;
+}
+
+#zonaE{
+    width: 115%;
+    margin-top: 8rem;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .landing-main-text{
+        font-size: 1.5rem;
+        padding-top: 2rem;
+    }
+
+    #zonaE{
+        width: 97%;
+        margin-top: 0rem;
+    }
+}

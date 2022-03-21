@@ -1,3 +1,6 @@
+body{
+  font-family: emoji;
+}
 
 #imgSenderos{
   width: 9%;
@@ -44,7 +47,9 @@
     margin-inline: 1rem;
   }
 
-
+  .sidebar{
+    z-index: 9;
+  }
 
   .card-img-top{
     height: 22rem !important;

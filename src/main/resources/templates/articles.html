@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Articulos</title>
+    <link rel="shortcut icon" type="image/jpg" th:href="@{/imgs/grupo-senderosp.png}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- MD BOOTSTRAP -->
     <!-- Font Awesome -->
@@ -41,26 +42,89 @@
     <!-- Jsap -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
-    <link th:href="@{/css/articles.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/articles.css}" >
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
 </head>
 <body>
 
-<nav class="navbar navbar-light bg-light">
+
+
+<!--/.Mobile-Navbar-->
+<div class="wrapper mobile-navbar">
+    <div class="burger-menu">
+        <div class="burger-click-region" onclick="haminate()">
+            <span class="burger-menu-piece top"></span>
+            <span class="burger-menu-piece middle"></span>
+            <span class="burger-menu-piece bottom"></span>
+        </div>
+    </div>
+
+    <!--/.Links-->
+    <div class="sidebar">
+        <div class="sidemenu">
+            <a th:href="@{/home}"><li class="sidetext">Home</li></a>
+            <a href="#"><li class="sidetext">Libros</li></a>
+            <a href="#"><li class="sidetext">Opción</li></a>
+            <a th:href="@{/contact}"><li class="sidetext">Contact</li></a>
+        </div>
+    </div>
+
+    <img id="mobile-img-senderos" alt="logo grupo senderos" th:src="@{/imgs/grupo-senderosp.png}">
+</div>
+<!--/.Mobile-Navbar-->
+
+<!--PC-Navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark primary-color ">
     <div class="container">
+        <!-- Navbar brand -->
+        <a class="navbar-brand" href="#">
+            <img th:src="@{/imgs/grupo-senderosp.png}" height="30" alt="mdb logo">
+        </a>
 
-        <a class="navbar-brand" href="#">Inicio</a>
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicNav"
+                aria-controls="basicNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <img
-                id="imgSenderos"
-                th:src="@{/imgs/grupo-senderosp.png}"
-                class="me-2"
-                alt="MDB Logo"
-                loading="lazy"
-        />
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse">
 
-        <a href="#"> <i class="far fa-heart fa-1x  " style="color: #fd1717"></i> </a>
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/home}">Home</a>
+                    <span class="underline"></span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/pdf}">Libros</a>
+                    <span class="underline"></span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Opción</a>
+                    <span class="underline"></span>
+                </li>
+
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">Grupo</a>
+                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+
+            </ul>
+            <!-- Links -->
+            <a th:href="@{/contact}" type="button" class="btn btn-outline-primary btn-navbar btn-circle"><i class="far fa-envelope fa-2x"></i></a>
+
+        </div>
+        <!-- Collapsible content -->
     </div>
 </nav>
+<!--/.PC-Navbar-->
 
 <!-- Jumbotron -->
 <div th:id="profileBackground"
@@ -163,13 +227,13 @@
 <div th:if="${totalPages > 1}">
     <nav>
         <ul class="pagination justify-content-center">
-            <li th:if="${param.autor == null}" class="page-item" th:classappend="${currentPage==1} ? disabled" ><a class="page-link" th:href="@{/pdf(page=${currentPage}-${1})}">Previous</a></li>
-            <li th:if="${param.autor == null}" th:each="i: ${#numbers.sequence(1,totalPages)}" class="page-item"><a th:text="${i}" class="page-link" th:href="@{/pdf(page=${i})}"></a></li>
-            <li th:if="${param.autor == null}" class="page-item" th:classappend="${currentPage==totalPages} ? disabled"><a class="page-link" th:href="@{/pdf(page=${currentPage}+${1})}">Next</a></li>
+            <li style="min-width: unset" th:if="${param.autor == null}" class="page-item" th:classappend="${currentPage==1} ? disabled" ><a class="page-link" th:href="@{/pdf(page=${currentPage}-${1})}">Previous</a></li>
+            <li style="min-width: unset" th:if="${param.autor == null}" th:each="i: ${#numbers.sequence(1,totalPages)}" class="page-item"><a th:text="${i}" class="page-link" th:href="@{/pdf(page=${i})}"></a></li>
+            <li style="min-width: unset" th:if="${param.autor == null}" class="page-item" th:classappend="${currentPage==totalPages} ? disabled"><a class="page-link" th:href="@{/pdf(page=${currentPage}+${1})}">Next</a></li>
 
-            <li th:if="${param.autor != null}" class="page-item" th:classappend="${currentPage==1} ? disabled" ><a class="page-link" th:href="@{/pdf(page=${currentPage}-${1},autor=${param.autor})}">Previous</a></li>
-            <li th:if="${param.autor != null}" th:each="i: ${#numbers.sequence(1,totalPages)}" class="page-item"><a th:text="${i}" class="page-link" th:href="@{/pdf(page=${i},autor=${param.autor})}"></a></li>
-            <li th:if="${param.autor != null}" class="page-item" th:classappend="${currentPage==totalPages} ? disabled"><a class="page-link" th:href="@{/pdf(page=${currentPage}+${1},autor=${param.autor})}">Next</a></li>
+            <li style="min-width: unset" th:if="${param.autor != null}" class="page-item" th:classappend="${currentPage==1} ? disabled" ><a class="page-link" th:href="@{/pdf(page=${currentPage}-${1},autor=${param.autor})}">Previous</a></li>
+            <li style="min-width: unset" th:if="${param.autor != null}" th:each="i: ${#numbers.sequence(1,totalPages)}" class="page-item"><a th:text="${i}" class="page-link" th:href="@{/pdf(page=${i},autor=${param.autor})}"></a></li>
+            <li style="min-width: unset" th:if="${param.autor != null}" class="page-item" th:classappend="${currentPage==totalPages} ? disabled"><a class="page-link" th:href="@{/pdf(page=${currentPage}+${1},autor=${param.autor})}">Next</a></li>
         </ul>
     </nav>
 </div>
@@ -218,7 +282,7 @@
 
     <!-- Copyright -->
     <div class="text-center p-3 bg-light">
-        © 2020 Copyright
+        © 2022 Copyright
         <a class="text-dark" href="https://mdbootstrap.com/">Grupo Senderos</a>
     </div>
     <!-- Copyright -->
@@ -227,5 +291,6 @@
 <!-- Footer -->
 
 <script th:src="@{/javascript/articles.js}"></script>
+<script th:src="@{/javascript/navbar.js}"></script>
 </body>
 </html>
